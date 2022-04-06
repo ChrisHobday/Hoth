@@ -1,0 +1,2 @@
+# Hoth
+Haskell authentication library.
