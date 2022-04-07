@@ -1,6 +1,5 @@
 {-# LANGUAGE TemplateHaskell #-}
 module User
-  -- ( .. )
   where
 
 import Executor
