@@ -56,6 +56,9 @@ main = do
   snWrappedMult2 <- makeStableName mult2
   snWrappedMult2' <- makeStableName mult2
 
+  snAdd1Mult1 <- makeStableName ((+1) . (*1))
+  snAdd1Mult1' <- makeStableName ((+1) . (*1))
+
   snAdd <- makeStableName (+)
   snAdd' <- makeStableName (+)
 
@@ -86,6 +89,7 @@ main = do
   -- Check composed functions
   snRenameBobUpdateIdx100 <- makeStableName (rename "Bob" . updateIdx 100)
   snRenameBobUpdateIdx100' <- makeStableName (rename "Bob" . updateIdx 100)
+
 
   -- Test
   putStrLn "Testing..."
@@ -127,6 +131,7 @@ main = do
   putStrLn $ "updateIdx == updateIdx                             " ++ show (eqStableName snUpdateIdx snUpdateIdx')
   putStrLn $ "updateIdx 100 == updateIdx 100                     " ++ show (eqStableName snUpdateIdx100 snUpdateIdx100')
   putStrLn $ "snRenameBobUpdateIdx100 == snRenameBobUpdateIdx100 " ++ show (eqStableName snRenameBobUpdateIdx100 snRenameBobUpdateIdx100')
+  putStrLn $ "((+1) . (*1)) == ((+1) . (*1))                     " ++ show (eqStableName snAdd1Mult1 snAdd1Mult1')
 
   putStrLn "Expected False..."
 
@@ -184,6 +189,7 @@ main = do
   putStrLn $ "updateIdx == updateIdx                             " ++ show (eqStableName snUpdateIdx snUpdateIdx')
   putStrLn $ "updateIdx 100 == updateIdx 100                     " ++ show (eqStableName snUpdateIdx100 snUpdateIdx100')
   putStrLn $ "snRenameBobUpdateIdx100 == snRenameBobUpdateIdx100 " ++ show (eqStableName snRenameBobUpdateIdx100 snRenameBobUpdateIdx100')
+  putStrLn $ "((+1) . (*1)) == ((+1) . (*1))                     " ++ show (eqStableName snAdd1Mult1 snAdd1Mult1')
 
   putStrLn "Expected False..."
 
