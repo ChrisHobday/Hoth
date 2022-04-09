@@ -68,42 +68,101 @@ main = do
   snWrappedMult <- makeStableName mult
   snWrappedMult' <- makeStableName mult
 
-  --Test
+  snRename <- makeStableName rename
+  snRename' <- makeStableName rename
 
-  putStrLn $ "1 == 1 " ++ show (sn1 == sn1')
-  putStrLn $ "one == one (one = 1) " ++ show (snOne == snOne')
-  putStrLn $ "1 == one (one = 1) " ++ show (sn1 == snOne)
+  snRenameBob <- makeStableName (rename "Bob")
+  snRenameBob' <- makeStableName (rename "Bob")
 
-  putStrLn $ "(+1) == (+1) " ++ show (snInc == snInc')
-  putStrLn $ "inc == inc " ++ show (snWrappedInc == snWrappedInc')
-  putStrLn $ "(+1) == inc (inc a = a + 1) " ++ show (snInc == snWrappedInc)
+  snRenameJim <- makeStableName (rename "Jim")
+  snRenameJim' <- makeStableName (rename "Jim")
 
-  putStrLn $ "(+2) == (+2) " ++ show (snInc2 == snInc2')
-  putStrLn $ "inc2 == inc2 (inc2 a = a + 2) " ++ show (snWrappedInc2 == snWrappedInc2')
-  putStrLn $ "(+2) == inc2 (inc2 a = a + 2) " ++ show (snInc2 == snWrappedInc2)
+  -- Test
+  putStrLn "Testing..........................."
 
-  putStrLn $ "(*1) == (*1) " ++ show (snMult1 == snMult1')
-  putStrLn $ "mult1 == mult1 (mult1 a = a * 1) " ++ show (snWrappedMult1 == snWrappedMult1')
-  putStrLn $ "(*1) == mult1 (mult1 a = a * 1) " ++ show (snWrappedMult1 == snWrappedMult1')
+  putStrLn $ "1     == 1                        " ++ show (eqStableName sn1 sn1')
+  putStrLn $ "one   == one (one = 1)            " ++ show (eqStableName snOne snOne')
+  putStrLn $ "1     == one (one = 1)            " ++ show (eqStableName sn1 snOne)
 
+  putStrLn $ "(+1)  == (+1)                     " ++ show (eqStableName snInc snInc')
+  putStrLn $ "inc   == inc                      " ++ show (eqStableName snWrappedInc snWrappedInc')
+  putStrLn $ "(+1)  == inc (inc a = a + 1)      " ++ show (eqStableName snInc snWrappedInc)
 
-  putStrLn $ "(+) == (+) " ++ show (snAdd == snAdd')
-  putStrLn $ "add == add (add a b == a + b) " ++ show (snWrappedAdd == snWrappedAdd')
-  putStrLn $ "(+) == add (add a b == a + b) " ++ show (snAdd == snWrappedAdd)
+  putStrLn $ "(+2)  == (+2)                     " ++ show (eqStableName snInc2 snInc2')
+  putStrLn $ "inc2  == inc2 (inc2 a = a + 2)    " ++ show (eqStableName snWrappedInc2 snWrappedInc2')
+  putStrLn $ "(+2)  == inc2 (inc2 a = a + 2)    " ++ show (eqStableName snInc2 snWrappedInc2)
+
+  putStrLn $ "(*1)  == (*1)                     " ++ show (eqStableName snMult1 snMult1')
+  putStrLn $ "mult1 == mult1 (mult1 a = a * 1)  " ++ show (eqStableName snWrappedMult1 snWrappedMult1')
+  putStrLn $ "(*1)  == mult1 (mult1 a = a * 1)  " ++ show (eqStableName snMult1 snWrappedMult1)
+
+  putStrLn $ "(*2)  == (*2)                     " ++ show (eqStableName snMult2 snMult2')
+  putStrLn $ "mult2 == mult2 (mult2 a = a * 2)  " ++ show (eqStableName snWrappedMult2 snWrappedMult2')
+  putStrLn $ "(*2)  == mult2 (mult2 a = a * 2)  " ++ show (eqStableName snMult2 snWrappedMult2)
+
+  putStrLn $ "(+)   == (+)                      " ++ show (eqStableName snAdd snAdd')
+  putStrLn $ "add   == add (add a b == a + b)   " ++ show (eqStableName snWrappedAdd snWrappedAdd')
+  putStrLn $ "(+)   == add (add a b == a + b)   " ++ show (eqStableName snAdd snWrappedAdd)
+
+  putStrLn $ "(*)   == (*)                      " ++ show (eqStableName snMult snMult')
+  putStrLn $ "mult  == mult (mult a b == a * b) " ++ show (eqStableName snWrappedMult snWrappedMult')
+  putStrLn $ "(*)   == mult (mult a b == a * b) " ++ show (eqStableName snMult snWrappedMult)
+
+  putStrLn $ "rename       == rename            " ++ show (eqStableName snRename snRename')
+  putStrLn $ "rename 'Bob' == rename 'Bob'      " ++ show (eqStableName snRenameBob snRenameBob')
+  putStrLn $ "rename 'Jim' == rename 'Jim'      " ++ show (eqStableName snRenameJim snRenameJim')
 
   -- False tests
-  -- putStrLn $ "1 == (+1) " ++ show (sn1 == snInc)
+  putStrLn $ "1     == (+1)                     " ++ show (eqStableName sn1 snInc)
+  putStrLn $ "(+)   == (*)                      " ++ show (eqStableName snAdd snMult)
+  putStrLn $ "(+)   == mult (mult a b == a * b) " ++ show (eqStableName snAdd snMult)
+  putStrLn $ "(+1)  == (+2)                     " ++ show (eqStableName snInc snInc2)
+  putStrLn $ "(+1)  == (*1)                     " ++ show (eqStableName snInc snMult1)
+  putStrLn $ "rename       == rename 'Bob       " ++ show (eqStableName snRename snRenameBob)
+  putStrLn $ "rename 'Bob' == rename 'Jim'      " ++ show (eqStableName snRenameBob snRenameJim)
 
-  -- Retest after a while
-  putStrLn $ "1 == 1 " ++ show (sn1 == sn1')
-  putStrLn $ "one == one (one = 1) " ++ show (snOne == snOne')
-  putStrLn $ "1 == one (one = 1) " ++ show (sn1 == snOne)
-  putStrLn $ "(+1) == (+1) " ++ show (snInc == snInc')
-  putStrLn $ "inc == inc " ++ show (snWrappedInc == snWrappedInc')
-  putStrLn $ "(+1) == inc (inc a = a + 1) " ++ show (snInc == snWrappedInc)
-  putStrLn $ "(+2) == (+2) " ++ show (snInc2 == snInc2')
-  putStrLn $ "inc2 == inc2 (inc2 a = a + 2) " ++ show (snWrappedInc2 == snWrappedInc2')
-  putStrLn $ "(+2) == inc2 (inc2 a = a + 2) " ++ show (snInc2 == snWrappedInc2)
-  putStrLn $ "(+) == (+) " ++ show (snAdd == snAdd')
-  putStrLn $ "add == add (add a b == a + b) " ++ show (snWrappedAdd == snWrappedAdd')
-  putStrLn $ "(+) == add (add a b == a + b) " ++ show (snAdd == snWrappedAdd)
+  let x = 10 + 20
+
+  -- Retest
+  putStrLn "Retesting........................."
+
+  putStrLn $ "1     == 1                        " ++ show (eqStableName sn1 sn1')
+  putStrLn $ "one   == one (one = 1)            " ++ show (eqStableName snOne snOne')
+  putStrLn $ "1     == one (one = 1)            " ++ show (eqStableName sn1 snOne)
+
+  putStrLn $ "(+1)  == (+1)                     " ++ show (eqStableName snInc snInc')
+  putStrLn $ "inc   == inc                      " ++ show (eqStableName snWrappedInc snWrappedInc')
+  putStrLn $ "(+1)  == inc (inc a = a + 1)      " ++ show (eqStableName snInc snWrappedInc)
+
+  putStrLn $ "(+2)  == (+2)                     " ++ show (eqStableName snInc2 snInc2')
+  putStrLn $ "inc2  == inc2 (inc2 a = a + 2)    " ++ show (eqStableName snWrappedInc2 snWrappedInc2')
+  putStrLn $ "(+2)  == inc2 (inc2 a = a + 2)    " ++ show (eqStableName snInc2 snWrappedInc2)
+
+  putStrLn $ "(*1)  == (*1)                     " ++ show (eqStableName snMult1 snMult1')
+  putStrLn $ "mult1 == mult1 (mult1 a = a * 1)  " ++ show (eqStableName snWrappedMult1 snWrappedMult1')
+  putStrLn $ "(*1)  == mult1 (mult1 a = a * 1)  " ++ show (eqStableName snMult1 snWrappedMult1)
+
+  putStrLn $ "(*2)  == (*2)                     " ++ show (eqStableName snMult2 snMult2')
+  putStrLn $ "mult2 == mult2 (mult2 a = a * 2)  " ++ show (eqStableName snWrappedMult2 snWrappedMult2')
+  putStrLn $ "(*2)  == mult2 (mult2 a = a * 2)  " ++ show (eqStableName snMult2 snWrappedMult2)
+
+  putStrLn $ "(+)   == (+)                      " ++ show (eqStableName snAdd snAdd')
+  putStrLn $ "add   == add (add a b == a + b)   " ++ show (eqStableName snWrappedAdd snWrappedAdd')
+  putStrLn $ "(+)   == add (add a b == a + b)   " ++ show (eqStableName snAdd snWrappedAdd)
+
+  putStrLn $ "(*)   == (*)                      " ++ show (eqStableName snMult snMult')
+  putStrLn $ "mult  == mult (mult a b == a * b) " ++ show (eqStableName snWrappedMult snWrappedMult')
+  putStrLn $ "(*)   == mult (mult a b == a * b) " ++ show (eqStableName snMult snWrappedMult)
+
+  putStrLn $ "rename       == rename            " ++ show (eqStableName snRename snRename')
+  putStrLn $ "rename 'Bob' == rename 'Bob'      " ++ show (eqStableName snRenameBob snRenameBob')
+  putStrLn $ "rename 'Jim' == rename 'Jim'      " ++ show (eqStableName snRenameJim snRenameJim')
+
+  -- False tests
+  putStrLn $ "1     == (+1)                     " ++ show (eqStableName sn1 snInc)
+  putStrLn $ "(+)   == (*)                      " ++ show (eqStableName snAdd snMult)
+  putStrLn $ "(+)   == mult (mult a b == a * b) " ++ show (eqStableName snAdd snMult)
+  putStrLn $ "(+1)  == (+2)                     " ++ show (eqStableName snInc snInc2)
+  putStrLn $ "(+1)  == (*1)                     " ++ show (eqStableName snInc snMult1)
+  putStrLn $ "rename       == rename 'Bob       " ++ show (eqStableName snRename snRenameBob)
+  putStrLn $ "rename 'Bob' == rename 'Jim'      " ++ show (eqStableName snRenameBob snRenameJim)

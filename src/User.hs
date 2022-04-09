@@ -17,4 +17,7 @@ instance Executor User where
                      then f a
                      else a
 
+rename :: String -> User -> User
+rename newName user = user { name = newName }
+
 -- functionName f = 'f
