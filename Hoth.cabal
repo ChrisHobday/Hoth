@@ -34,6 +34,7 @@ library
   build-depends:
       base >=4.7 && <5
     , template-haskell
+    , universe-reverse-instances
   default-language: Haskell2010
 
 executable Hoth-exe
@@ -47,6 +48,7 @@ executable Hoth-exe
       Hoth
     , base >=4.7 && <5
     , template-haskell
+    , universe-reverse-instances
   default-language: Haskell2010
 
 test-suite Hoth-test
@@ -61,4 +63,5 @@ test-suite Hoth-test
       Hoth
     , base >=4.7 && <5
     , template-haskell
+    , universe-reverse-instances
   default-language: Haskell2010

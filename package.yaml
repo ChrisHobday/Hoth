@@ -22,6 +22,7 @@ description:         Please see the README on GitHub at <https://github.com/Chri
 dependencies:
 - base >= 4.7 && < 5
 - template-haskell
+- universe-reverse-instances
 
 library:
   source-dirs: src
